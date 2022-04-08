@@ -13,12 +13,12 @@
       shell: docker login -u "{{DOCKER_USERNAME}}" -p "{{DOCKER_PASSWORD}}"
     - name: Copy file docker-compose.yaml to run NodeJs app
       copy:
-        src: docker-compose.yaml
+        src: docker-compose-dev.yaml
         dest: /home/ubuntu
     - name: Run NodeJS app
       shell: |
-        sudo docker-compose stop
+        sudo docker-compose -f docker-compose-dev.yaml stop
         sudo docker-compose rm -f
-        sudo docker-compose pull
-        sudo docker-compose up -d
+        sudo docker-compose -f docker-compose-dev.yaml pull
+        sudo docker-compose -f docker-compose-dev.yaml up -d
 ...
