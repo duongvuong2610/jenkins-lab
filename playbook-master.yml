@@ -1,0 +1,18 @@
+---
+- hosts: server
+  remote_user: ubuntu
+  become: yes
+  tasks:
+    - name: Login to DockerHub
+      shell: docker login -u "{{DOCKER_USERNAME}}" -p "{{DOCKER_PASSWORD}}"
+    - name: Copy file docker-compose.yaml to run NodeJs app
+      copy:
+        src: docker-compose-master.yaml
+        dest: /home/ubuntu
+    - name: Run NodeJS app
+      shell: |
+        sudo docker-compose -f docker-compose-master.yaml stop
+        sudo docker-compose rm -f
+        sudo docker-compose -f docker-compose-master.yaml pull
+        sudo docker-compose -f docker-compose-master.yaml up -d
+...
