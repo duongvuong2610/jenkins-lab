@@ -5,7 +5,7 @@
   tasks:
     - name: Login to DockerHub
       shell: docker login -u "{{DOCKER_USERNAME}}" -p "{{DOCKER_PASSWORD}}"
-    - name: Copy file docker-compose.yaml to run NodeJs app
+    - name: Copy file docker-compose-master.yaml to run NodeJs app
       copy:
         src: docker-compose-master.yaml
         dest: /home/ubuntu
