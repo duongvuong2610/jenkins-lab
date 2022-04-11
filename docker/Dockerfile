@@ -16,4 +16,5 @@ RUN npm install
 COPY . .
 
 EXPOSE 80
-CMD [ "node", "server.js" ]
+#CMD [ "node", "server.js" ]
+CMD ["nginx", "-g", "daemon off;"]
