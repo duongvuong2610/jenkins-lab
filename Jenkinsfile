@@ -5,7 +5,7 @@ pipeline {
         DOCKER_IMAGE           = "992610/nodejs"
     }
     stages {
-        stage("Build"){
+        stage("dev - Build"){
             options {
                 timeout(time: 10, unit: 'MINUTES')
             }
@@ -31,7 +31,7 @@ pipeline {
                 sh "docker image rm ${DOCKER_IMAGE}:latest"
             }
         }
-        stage("Deploy"){
+        stage("dev - Deploy"){
             options {
                 timeout(time: 10, unit: 'MINUTES')
             }
@@ -54,7 +54,7 @@ pipeline {
                 
             }
         }
-        stage("Build"){
+        stage("master - Build"){
             options {
                 timeout(time: 10, unit: 'MINUTES')
             }
@@ -77,7 +77,7 @@ pipeline {
                 sh "docker image rm ${DOCKER_IMAGE}:latest"
             }
         }
-        stage("Deploy"){
+        stage("master - Deploy"){
             options {
                 timeout(time: 10, unit: 'MINUTES')
             }
