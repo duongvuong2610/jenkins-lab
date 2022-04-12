@@ -5,7 +5,7 @@ pipeline {
         DOCKER_IMAGE           = "992610/nodejs"
     }
     stages {
-        stage("dev - Build"){
+        stage("dev - build"){
             options {
                 timeout(time: 10, unit: 'MINUTES')
             }
@@ -25,13 +25,11 @@ pipeline {
                     sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
                     sh "docker push ${DOCKER_IMAGE}:latest"
                 }
-
-                //clean to save disk
                 sh "docker image rm ${DOCKER_IMAGE}:${DOCKER_TAG}"
                 sh "docker image rm ${DOCKER_IMAGE}:latest"
             }
         }
-        stage("dev - Deploy"){
+        stage("dev - deploy"){
             options {
                 timeout(time: 10, unit: 'MINUTES')
             }
@@ -54,30 +52,15 @@ pipeline {
                 
             }
         }
-        stage("master - Build"){
+        stage("master - build"){
             options {
                 timeout(time: 10, unit: 'MINUTES')
             }
-            environment {
-                DOCKER_TAG="${GIT_BRANCH.tokenize('/').pop()}-${GIT_COMMIT.substring(0,7)}"
-            }
             steps {
-                sh '''
-                    docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ./docker
-                    docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest
-                    docker image ls | grep ${DOCKER_IMAGE}'''
-                withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    sh 'echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin'
-                    sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
-                    sh "docker push ${DOCKER_IMAGE}:latest"
-                }
-
-                //clean to save disk
-                sh "docker image rm ${DOCKER_IMAGE}:${DOCKER_TAG}"
-                sh "docker image rm ${DOCKER_IMAGE}:latest"
+                echo "run: master - build success"
             }
         }
-        stage("master - Deploy"){
+        stage("master - deploy"){
             options {
                 timeout(time: 10, unit: 'MINUTES')
             }

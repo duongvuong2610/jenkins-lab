@@ -3,7 +3,7 @@
   remote_user: ubuntu
   become: yes
   tasks:
-    - name: Install Docker, Docker Compose
+    - name: install docker, docker compose
       apt:
         name:
           - docker
