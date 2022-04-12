@@ -3,4 +3,4 @@ services:
   app:
     image: 992610/nodejs:latest
     ports:
-      - "80:80"
+      - "80:8080"
