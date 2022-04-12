@@ -13,7 +13,7 @@ pipeline {
                 DOCKER_TAG="${GIT_BRANCH.tokenize('/').pop()}-${GIT_COMMIT.substring(0,7)}"
             }
             when {
-                branch 'dev'
+                branch '*/dev'
             }
             steps {
                 sh '''
@@ -34,7 +34,7 @@ pipeline {
                 timeout(time: 10, unit: 'MINUTES')
             }
             when {
-                branch 'dev'
+                branch '*/dev'
             }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
@@ -57,7 +57,7 @@ pipeline {
                 timeout(time: 10, unit: 'MINUTES')
             }
             when {
-                branch 'master'
+                branch '*/master'
             }
             steps {
                 echo "run: master - build success"
@@ -68,7 +68,7 @@ pipeline {
                 timeout(time: 10, unit: 'MINUTES')
             }
             when {
-                branch 'master'
+                branch '*/master'
             }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
