@@ -56,9 +56,6 @@ pipeline {
             options {
                 timeout(time: 10, unit: 'MINUTES')
             }
-            when {
-                branch 'master'
-            }
             steps {
                 echo "run: master - build success"
             }
@@ -66,9 +63,6 @@ pipeline {
         stage("master - deploy"){
             options {
                 timeout(time: 10, unit: 'MINUTES')
-            }
-            when {
-                branch 'master'
             }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
